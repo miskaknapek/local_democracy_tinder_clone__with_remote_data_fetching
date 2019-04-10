@@ -40,6 +40,16 @@ TO DO :
 //////////////////////////// VARIABLES
 
 
+//// (remote) data 
+
+var remote_data_url = "https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/master/test_meta_data_file.txt";
+
+var raw_fetched_remote_metadata_text_file = "";
+var PARSED_fetched_remote_metadata_text_file = "";
+
+// for parsed meta data objects 
+var curr_meta_data_objects = [];
+
 
 //// Which display mode are we in? 
 var mode__choosing = "choosing";
@@ -477,7 +487,7 @@ var advance_current_screen_id = function(){
 
 	current_choice_screen__as_i_in_list_of_choice_screens++ ;
 
-	current_choice_screen__as_i_in_list_of_choice_screens = current_choice_screen__as_i_in_list_of_choice_screens % items.length;
+	current_choice_screen__as_i_in_list_of_choice_screens = current_choice_screen__as_i_in_list_of_choice_screens % curr_meta_data_objects.length;
 
 	console.log("---- current_choice_screen__as_i_in_list_of_choice_screens : "+current_choice_screen__as_i_in_list_of_choice_screens );
 
@@ -533,10 +543,10 @@ var show_relevant_data_for__choosing_screen = function(){
 	console.log(">>>> show_relevant_data_for__choosing_screen() ");
 
 	// set image
-	image_image.css("background-image", "url("+items[ current_choice_screen__as_i_in_list_of_choice_screens ].images[0]+")")
+	image_image.css("background-image", "url("+curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].imageurl+")")
 
 	// set main image text 
-	text_area__main.html("<span class='bold_weight_text'> "+items[ current_choice_screen__as_i_in_list_of_choice_screens ].name+" </span>" );
+	text_area__main.html("<span class='bold_weight_text'> "+curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].introtext+" </span>" );
 
 	// set image sub text () * 2 ?)
 	text_area__sub.html( "<i> <span style='font-size:14px'> - Streichen nach rechts für JA, und nach links für NO. <br/> Sehen Sie, was die Parteien gewählt haben. </i> </span>" );
@@ -562,24 +572,24 @@ var show_relevant_data_for__results_screen = function(){
 	if( current_voting_screen_mode === yes_vote__screen ){
 
 		// set image
-		image_image.css("background-image", "url("+items[ current_choice_screen__as_i_in_list_of_choice_screens ].images[0]+")")
+		image_image.css("background-image", "url("+curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].imageurl+")")
 
 		// set main image text 
-		text_area__main.html( items[ current_choice_screen__as_i_in_list_of_choice_screens ].name );
+		text_area__main.html( curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].introtext );
 
 		// set image sub text () * 2 ?)
-		text_area__sub.html( "<span class='bold_weight_text'> JA </span> stimmte : <span class='bold_weight_text'> "+( items[ current_choice_screen__as_i_in_list_of_choice_screens ].which_parties_voted_YES_for_this__as_list.join(", ")+" </span> " ) );
+		text_area__sub.html( "<span class='bold_weight_text'> JA </span> stimmte : <span class='bold_weight_text'> "+( curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].jatext+" </span> " ) );
 
 	}else{
 
 		// set image
-		image_image.css("background-image", "url("+items[ current_choice_screen__as_i_in_list_of_choice_screens ].images[0]+")")
+		image_image.css("background-image", "url("+curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].imageurl+")")
 
 		// set main image text 
-		text_area__main.html( items[ current_choice_screen__as_i_in_list_of_choice_screens ].name );
+		text_area__main.html( curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].introtext );
 
 		// set image sub text () * 2 ?)
-		text_area__sub.html( "<span class='bold_weight_text'> NEIN </span> stimmte : <span class='bold_weight_text'> "+( items[ current_choice_screen__as_i_in_list_of_choice_screens ].which_parties_voted_NO_for_this__as_list.join(", ")+" </span> " ) );
+		text_area__sub.html( "<span class='bold_weight_text'> NEIN </span> stimmte : <span class='bold_weight_text'> "+( curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].neintext+" </span> " ) );
 
 	}
 
@@ -591,7 +601,7 @@ var show_relevant_data_for__results_screen = function(){
 
 
 
-
+//// [ ANALYTICS ] make some statistics
 
 var ping_server_with_current_screen_num = function(){
 
@@ -604,6 +614,154 @@ var ping_server_with_current_screen_num = function(){
 
 }
 
+
+
+
+/////// ---------- [REMOTE] DATA FETCHING & PARSING [ NEW ]
+
+
+//// FETCH DATA 
+
+var fetch_text_data_from_remote_server = function(){
+
+	console.log(">>>> fetch_text_data_from_remote_server() | url : |"+remote_data_url+"|" );
+
+	fetch( remote_data_url, /* { mode: 'no-cors' } */ )
+		.then( resp => resp.text() )
+		.then( text => {
+			 console.log("-- GOT LONGER DATA -> length === "+text.length ); 
+			 // window.longer_data = body;
+			 window.raw_fetched_remote_metadata_text_file = text;					 
+
+			//// AND THEN :
+
+			// now parse the data 
+			parse_fetched_data();
+
+			////// setup buttons? 
+			bind_buttons_to_variables();
+			bind_image_and_text_divs_to_variables();
+			setup_buttons__INITIALLY__for__all_screens();
+			// for er... swiping… 
+			setup_swipe_functionality();
+
+			////// initialise 
+			show_relevant_data_for__choosing_screen();
+
+	} );
+
+}
+
+
+
+//// PARSE DATA 
+
+var parse_fetched_data = function(){
+
+	console.log(">>>> parse_fetched_data() - original length |"+raw_fetched_remote_metadata_text_file.length+"|");
+
+
+	//// split the text by line
+	intxt_split_by_line = raw_fetched_remote_metadata_text_file.split("\n");
+
+	//
+	console.log("--- split the text by newline and got |"+intxt_split_by_line.length+"| lines " );
+
+
+	// fill this… with meta-data objects
+	curr_meta_data_objects = [];
+
+	var current_meta_data_obj = {};
+	var current_meta_data_obj__completeness_score = 0;
+
+
+	// loop and parse 
+
+	for( var i = 0; i < intxt_split_by_line.length; i++ ){
+
+		console.log("--- -- parsing line #"+i+" : |"+intxt_split_by_line[i]+"|" );
+
+		//// figure out which kind of line it is
+
+		// try splitting the line by "]"
+		curr_line_split_by_hard_bracket = intxt_split_by_line[i].split("]");
+
+		//
+		if( curr_line_split_by_hard_bracket.length > 1 ){
+
+			console.log("--- --- - curr line splits by ]");
+
+			//// check if it's a image url 
+			if( curr_line_split_by_hard_bracket[0] === "[introtext" ){
+
+				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
+				console.log("--- --- --- this line is a introtext : |"+curr_line_trimmed+"|");
+
+				current_meta_data_obj[ "introtext" ] = curr_line_trimmed;
+
+			} // is it a yes swipe text?
+			//// check if it's a image url 
+			else if( curr_line_split_by_hard_bracket[0] === "[imageurl" ){
+
+				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
+				console.log("--- --- --- this line is an image url : |"+curr_line_trimmed+"|");
+
+				current_meta_data_obj[ "imageurl" ] = curr_line_trimmed;
+
+			} // is it a yes swipe text?
+			else if( curr_line_split_by_hard_bracket[0] === "[jatext" ){
+
+				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
+				console.log("--- --- --- this line is an JA swipe text  : |"+curr_line_trimmed+"|");
+
+				current_meta_data_obj[ "jatext" ] = curr_line_trimmed;
+
+			} // is it a no swipe text?
+			else if( curr_line_split_by_hard_bracket[0] === "[neintext" ){
+
+				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
+				console.log( "--- --- --- this line is an NEIN swipe text : |"+curr_line_trimmed+"|");
+
+				current_meta_data_obj[ "neintext" ] = curr_line_trimmed;
+			}
+
+		}
+
+
+		// // // END OF LOOP : is the meta-data object complete? 
+		curr_meta_data_obj__num_of_keys = Object.keys( current_meta_data_obj ).length ;
+		console.log("--- curr_meta_data_obj__num_of_keys = "+curr_meta_data_obj__num_of_keys );
+		console.log("\n current meta data object looks like this : ");
+		console.log( JSON.stringify( current_meta_data_obj )+"\n" );
+		console.log( "\n" );
+
+		// now check if the object is complete… 
+		if( curr_meta_data_obj__num_of_keys === 4 ){
+
+			console.log("||| end of parsing loop : curr obj has enough keys to make an object "+Object.keys( current_meta_data_obj ).length+" || adding curr oject to out meta data objects array and staring an new object" );
+
+			// deep copy first :) 
+			curr_meta_data_objects.push( JSON.parse( JSON.stringify( current_meta_data_obj ) ) );
+
+			// reset the object 
+			current_meta_data_obj = {};
+		}		
+
+	}
+
+
+	//// go line-by-line and parse the text 
+
+		// if curr_line.slice(0,1) === "#"
+		// // make new meta data object 
+
+		// split by "]"
+		// // if split_text.length > 2 
+		// // if split_text[0] === "[ja":
+		// // //  curr_meta_data_obj.ja_data = split_text[0]
+
+console.log("|||| END OF PARSING - got |"+curr_meta_data_objects.length+"| meta data objcts in the curr_meta_data_objects :) ");
+}
 
 
 
@@ -623,9 +781,16 @@ $( window ).on( 'load', function(){
 
 	console.log("--- document loaded! ");
 
-	console.log("---------- items : ");
-	console.log( items );
+	console.log("---------- curr_meta_data_objects : ");
+	console.log( curr_meta_data_objects );
 
+	//// FETCH (REMOET) META DATA! 
+	fetch_text_data_from_remote_server();
+
+	//// PARSE REMOTE DATA INTO LOCAL META DATA 
+
+/*
+	//// AND THEN :
 
 	////// setup buttons? 
 	bind_buttons_to_variables();
@@ -636,9 +801,11 @@ $( window ).on( 'load', function(){
 
 	////// initialise 
 	show_relevant_data_for__choosing_screen();
-
+*/
 
 	// ping the server- at the start 
 	// // ping_server_with_current_screen_num();
+
+
 
 });
