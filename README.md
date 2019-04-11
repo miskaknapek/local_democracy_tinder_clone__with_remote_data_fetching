@@ -8,7 +8,9 @@ You can also test things straight from your browser, without an ftp server. Just
 
 ### Live example  
 You'll find a live example here : 
-http://sourisr.kapsi.fi/freiburg/
+http://sourisr.kapsi.fi/freiburg_remote_meta_data/
+
+<br>
 
 
 ### Modifying texts 
@@ -24,6 +26,7 @@ An example of such a meta-data text file is here ( yes, you can host it on githu
 
 https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/master/test_meta_data_file.txt
 
+<br>
 
 #### Modifying the meta-data file
 
@@ -37,6 +40,8 @@ https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/maste
 
 The syntax for the file content :
 Each line with info you want to add to the Election Tinder, needs to start with one of the squre bracket terms shown below. Following the bracket you'll have the item you want to define. ( Please note that if you want to add a new line in a text you're adding, please add a html break tag where you want the newline, rather than a 'normal' line break.) .
+
+<br>
 
 #### Defining static conent, in the meta-data file : 
 
