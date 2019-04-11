@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en">
+
+	<head>
+
+	<meta charset="utf-8">
+	<title> TEST ZONE  - Freiburg Wahltinder -  TEST ZONE </title>
+
+	<!-- responsive magic -->
+	<meta name="viewport" content="width=device-width">	  
+
+	<!-- CSS! -->
+
+		<style type="text/css">
+
+			body{
+				font-family: sans-serif;
+				font-size: 24px;
+				color: darkblue;
+				font-weight: 800;
+			}
+
+		</style>
+
+	</head>
+
+		<body>
+
+			Hallo! <br> testing testing testing
+
+
+		<script type="text/javascript">
+
+			/* TEST APP FOR PROCESSING TEXT DATA */
+
+			body_ = document.getElementsByTagName( "body" )[0];
+			body_.innerHTML += "<br><br>accessing the body!";
+
+
+			/* ---- do data fetching! ---- */
+
+			// local url
+			// // var url = "http://localhost:8000/tempdata/wahltinder_metadata.txt";
+
+			// github url 
+			var url = "https://raw.githubusercontent.com/miskaknapek/test_repository/master/test_meta_data_file";
+
+			fetch( url, /* { mode: 'no-cors' } */ )
+				.then( resp => resp.text() )
+				.then( text => {
+					 console.log("-- GOT LONGER DATA -> length === "+text.length ); 
+					 // window.longer_data = body;
+					 window.data2 = text;					 
+
+					 body_.innerHTML += "<br><br>"+window.data2;
+					} );
+
+
+
+		</script>
+
+
+	</body>
+
+
+</html>

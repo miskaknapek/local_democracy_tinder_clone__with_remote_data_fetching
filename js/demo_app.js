@@ -43,7 +43,7 @@ TO DO :
 
 //// (remote) data 
 
-var remote_data_url = "https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/master/test_meta_data_file.txt";
+var remote_meta_data_url = "https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/master/test_meta_data_file.txt";
 
 var raw_fetched_remote_metadata_text_file = "";
 var PARSED_fetched_remote_metadata_text_file = "";
@@ -642,9 +642,9 @@ var ping_server_with_current_screen_num = function(){
 
 var fetch_text_data_from_remote_server = function(){
 
-	console.log(">>>> fetch_text_data_from_remote_server() | url : |"+remote_data_url+"|" );
+	console.log(">>>> fetch_text_data_from_remote_server() | url : |"+remote_meta_data_url+"|" );
 
-	fetch( remote_data_url, /* { mode: 'no-cors' } */ )
+	fetch( remote_meta_data_url, /* { mode: 'no-cors' } */ )
 		.then( resp => resp.text() )
 		.then( text => {
 			 console.log("-- GOT LONGER DATA -> length === "+text.length ); 
