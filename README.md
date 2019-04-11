@@ -38,7 +38,7 @@ https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/maste
 The syntax for the file content :
 Each line with info you want to add to the Election Tinder, needs to start with one of the squre bracket terms shown below. Following the bracket you'll have the item you want to define. ( Please note that if you want to add a new line in a text you're adding, please add a html break tag where you want the newline, rather than a 'normal' line break.) .
 
-##### Defining static conent, in the meta-data file : 
+#### Defining static conent, in the meta-data file : 
 
 **[page_title]** the html's page name; as one sees in the page tab.
 
@@ -50,7 +50,7 @@ Each line with info you want to add to the Election Tinder, needs to start with 
 
 <br>
 
-##### Defining the question-answer screens, in the meta-data file: 
+#### Defining the question-answer screens, in the meta-data file: 
 KINDLY NOTE: each of these four items NEEDS to be in place, for every question-answer screen you wish to include. Otherwise it won't work :( . So these four items per screen. 
 
 **[introtext]** The question text. 
