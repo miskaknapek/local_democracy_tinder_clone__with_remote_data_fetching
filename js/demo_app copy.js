@@ -81,11 +81,6 @@ var no_button;
 
 //// image and text div referenes 
 
-var page_title;
-
-var header_txt;
-var header_subtext;
-
 var outer_outer;
 var image_area_outer;
 var image_image_outer; 
@@ -97,12 +92,6 @@ var text_area__sub;
 ///// animation matters
 
 var animation_speed = 200;
-
-
-////// texts 
-
-// this can be replced using the meta-data 
-texts__initial_instructional_text = "- Streichen nach rechts für JA, und nach links für NO. <br/> Sehen Sie, was die Parteien gewählt haben.";
 
 //////////////////////////// methods
 //////////////////////////// methods
@@ -133,12 +122,6 @@ set_up_buttons_for_current_view = function(){
 var bind_image_and_text_divs_to_variables = function(){
 
 	console.log(">>>> bind_image_and_text_divs_to_variables() ");
-
-
-	page_title = $("title");
-
-	header_txt = $("#header");
-	header_subtext = $("#header_subtext");
 
 	outer_outer = $("#outer_outer");
 	image_area_outer = $("#image_area_outer");
@@ -567,7 +550,7 @@ var show_relevant_data_for__choosing_screen = function(){
 	text_area__main.html("<span class='bold_weight_text'> "+curr_meta_data_objects[ current_choice_screen__as_i_in_list_of_choice_screens ].introtext+" </span>" );
 
 	// set image sub text () * 2 ?)
-	text_area__sub.html( "<i> <span style='font-size:14px'> "+texts__initial_instructional_text+" </i> </span>" );
+	text_area__sub.html( "<i> <span style='font-size:14px'> - Streichen nach rechts für JA, und nach links für NO. <br/> Sehen Sie, was die Parteien gewählt haben. </i> </span>" );
 
 	// finally set the text area transparencies
 	text_area__main.css("background-image", "url(images/transparentBackground_90pc.png)" )
@@ -742,39 +725,7 @@ var parse_fetched_data = function(){
 
 				current_meta_data_obj[ "neintext" ] = curr_line_trimmed;
 			}
-			// --- OTHER STATIC PAGE METADATA ---
-			// the intiial instructional text
-			else if( curr_line_split_by_hard_bracket[0] === "[texts__initial_instructional_text" ){
 
-				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
-				console.log( "--- --- --- this is an initial instructional text swipe text : |"+curr_line_trimmed+"|");
-
-				texts__initial_instructional_text = curr_line_trimmed;	
-			}			
-			// the hedaer text 
-			else if( curr_line_split_by_hard_bracket[0] === "[header_text" ){
-
-				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
-				console.log( "--- --- --- this is header text : |"+curr_line_trimmed+"|");
-
-				document.getElementById("header").innerText = curr_line_trimmed;
-			}
-			// header_sub_text
-			else if( curr_line_split_by_hard_bracket[0] === "[header_sub_text" ){
-
-				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
-				console.log( "--- --- --- this is SUB header text : |"+curr_line_trimmed+"|");
-
-				document.getElementById("header_subtext").innerText = curr_line_trimmed;
-			}
-			// page title 
-			else if( curr_line_split_by_hard_bracket[0] === "[page_title" ){
-
-				curr_line_trimmed = curr_line_split_by_hard_bracket[1].trim();
-				console.log( "--- --- --- this the page Title: |"+curr_line_trimmed+"|");
-
-				document.getElementsByTagName("title")[0].innerHTML = curr_line_trimmed;
-			}
 		}
 
 
