@@ -6,6 +6,8 @@
 Basically it all runs in the browser, so you only need to have an ftp server that can serve up files, no browser-based scripting support is needed. 
 You can also test things straight from your browser, without an ftp server. Just open a browser and ask the browser to look at the index.html file. 
 
+<br>
+
 
 ### Live example  
 ------
@@ -29,7 +31,9 @@ An example of such a meta-data text file is here ( yes, you can host it on githu
 
 https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/master/test_meta_data_file.txt
 
+
 <br>
+
 
 #### Modifying the meta-data file
 ------
@@ -44,7 +48,9 @@ https://raw.githubusercontent.com/miskaknapek/test_metadata_for_wahltinder/maste
 The syntax for the file content :
 Each line with info you want to add to the Election Tinder, needs to start with one of the squre bracket terms shown below. Following the bracket you'll have the item you want to define. ( Please note that if you want to add a new line in a text you're adding, please add a html break tag where you want the newline, rather than a 'normal' line break.) .
 
+
 <br>
+
 
 #### Defining static conent, in the meta-data file : 
 ------
@@ -56,7 +62,9 @@ Each line with info you want to add to the Election Tinder, needs to start with 
 
 **[texts__initial_instructional_text]** This is the black text seen right under the picture, when opening the Election Tinder for the first tiem. Typically the text would be an instruction of how to operate the Election Tinder.
 
+
 <br>
+
 
 #### Defining the question-answer screens, in the meta-data file: 
 ------
@@ -70,7 +78,9 @@ KINDLY NOTE: each of these four items NEEDS to be in place, for every question-a
 
 **[imageurl]** the url to the image 
 
+
 <br>
+
 
 ### Credits 
 ------
