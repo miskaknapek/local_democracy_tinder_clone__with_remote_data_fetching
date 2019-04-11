@@ -41,6 +41,7 @@ Each line with info you want to add to the Election Tinder, needs to start with 
 ##### Defining static conent, in the meta-data file : 
 
 **[page_title]** the html's page name; as one sees in the page tab.
+
 **[header_text]** The text at the top of the html page.
 
 **[header_sub_text]** The text right under the above .
@@ -49,7 +50,7 @@ Each line with info you want to add to the Election Tinder, needs to start with 
 
 <br>
 
-** Defining the question-answer screens, in the meta-data file: **
+##### Defining the question-answer screens, in the meta-data file: 
 KINDLY NOTE: each of these four items NEEDS to be in place, for every question-answer screen you wish to include. Otherwise it won't work :( . So these four items per screen. 
 
 **[introtext]** The question text. 
